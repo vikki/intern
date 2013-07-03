@@ -397,6 +397,68 @@ define([
 
 			assert.strictEqual(suite.numTests, 4, 'Suite#numTests should return the correct number of tests, including those from nested suites');
 			assert.strictEqual(suite.numFailedTests, 2, 'Suite#numFailedTests returns the correct number of failed tests, including those from nested suites');
-		}
+		},
+
+		/* 
+		   //Commented out as the requirement to fail a dummy test that is being tested (ergh meta) 
+		   //is too highly coupled to the implementation so it fails the real test.. if that makes sense 
+		 'Suite#run' : function() {
+		  var dfd,
+		      suite,
+		      failedTests,
+		      failHandle,
+		      passingTests,
+		      passHandle;
+
+		  dfd = this.async(1000);
+
+		  suite = new Suite({
+		        name: 'test suite',
+		      tests : [
+		      new Test({
+		        name : 'test that passes',
+		        test : function() {
+		          assert.isTrue(true, ' ^^^ true isnt true');
+		        },
+		        parent:suite
+		      }),
+		      new Test({
+		        name : 'test that fails',
+		        test : function() {
+		          assert.isFalse(true, ' ^^^ true isnt true');
+		        },
+		        parent:suite
+		      }),
+		      new Test({
+		        name : 'another test that should pass',
+		        test : function() {
+		          assert.isTrue(true, ' ^^^ true isnt true');
+		        },
+		        parent:suite
+		      })
+		    ]
+		  });
+
+		  failedTests = [];
+		  failHandle = topic.subscribe('/test/fail', function (suite) {
+		    failingTests.push(suite);
+		  });
+		  passingTests = [];
+		  passHandle = topic.subscribe('/test/pass', function (suite) {
+		    passingTests.push(suite);
+		  });
+
+		  suite.run().always(dfd.callback(function () {
+		    try {
+		      assert.equal(2,  passingTests.length, '2 tests should be reported as passing');
+		      assert.equal(1,  failedTests.length, '1 test should be reported as failed');
+		    }
+		    finally {
+		      failHandle.remove();
+		      passHandle.remove();
+		    }
+		  }));
+		}*/
+
 	});
 });
