@@ -31,14 +31,15 @@ define([
 		},
 		'tests following a failed test should be executed (and should not automatically fail)': function() {
 			var suite,
-				dfd = this.async(5000),
+				dfd = this.async(20000),
 				self = this,
-				arbitaryUrl = 'http://www.example.com';
+				arbitaryUrl = require.toUrl('./data/basic.html');
 
 			suite = new Suite({
 				name: 'test suite',
-				remote: self.remote,
-				tests : [
+				remote: self.remote
+			});
+			suite.tests = [
 					new Test({
 						name : 'test that passes',
 						test : function() {
@@ -67,10 +68,9 @@ define([
 										assert.isTrue(true, 'true isnt true');
 									});
 						},
-						parent:this
+						parent:suite
 					})
-				]
-			});
+				];
 
 			suite.run()
 				.always(dfd.callback(function () {
